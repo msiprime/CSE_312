@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoginForm03Controller {
     public TextField txtName;
@@ -18,6 +19,6 @@ public class LoginForm03Controller {
         name = txtName.getText();
         loginContext.getChildren().clear();
         Stage stage = (Stage) loginContext.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/client-03-form.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/client-03-form.fxml")))));
     }
 }

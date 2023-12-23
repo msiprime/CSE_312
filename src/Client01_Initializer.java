@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Client01_Initializer extends Application {
 
@@ -13,8 +14,7 @@ public class Client01_Initializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("chat_application_project/view/login-form-01.fxml"))));
-//        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("chat_application_project/view/login-form-01.fxml")))));
         primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }

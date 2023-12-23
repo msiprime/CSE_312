@@ -21,6 +21,6 @@ public class LoginForm02Controller {
         name = txtName.getText();
         loginContext.getChildren().clear();
         Stage stage = (Stage) loginContext.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("../view/client-02-form.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/client-02-form.fxml")))));
     }
 }

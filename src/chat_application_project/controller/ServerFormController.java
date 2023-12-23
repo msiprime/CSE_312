@@ -54,43 +54,6 @@ public class ServerFormController {
         msgContext.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         msgContext.vvalueProperty().bind(context.heightProperty());
 
-//        new Thread(() -> {
-//            try {
-//                Socket imgSocket = new Socket("localhost", PORT + 1);
-//                while (true) {
-//                    imgOutputStream = imgSocket.getOutputStream();
-//                    imgInputStream = imgSocket.getInputStream();
-//
-//                    byte[] sizeAr = new byte[4];
-//                    imgInputStream.read(sizeAr);
-//                    int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
-//
-//                    byte[] imageAr = new byte[size];
-//                    imgInputStream.read(imageAr);
-//
-//                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageAr));
-//
-//                    System.out.println("Received " + image.getHeight() + "x" + image.getWidth() + ": " + System.currentTimeMillis());
-//                    ImageIO.write(image, "jpg", new File("/media/sandu/0559F5C021740317/GDSE/Project_Zone/IdeaProjects/INP_Course_Work/src/lk/play_tech/chat_application/bo/test4.jpg"));
-//                    //BufferedImage sendImage = ImageIO.read(new File("/home/sandu/Downloads/296351115_1695464754171592_2138034279597586981_n.jpg"));
-//
-//                    Platform.runLater(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Image img = SwingFXUtils.toFXImage(image, null);
-//                            ImageView imageView = new ImageView(img);
-//                            imageView.setFitHeight(150);
-//                            imageView.setFitWidth(150);
-//                            imageView.setLayoutY(100);
-//                            context.getChildren().add(imageView);
-//                            i += 120;
-//                        }
-//                    });
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
         new Thread(() -> {
             while (true) {
                 serverClient = new Client(PORT);
@@ -101,7 +64,7 @@ public class ServerFormController {
                     processTextMessage(serverClient, serverClient.getDataInputStream());
                     client = null;
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
             }
         }).start();
@@ -141,54 +104,17 @@ public class ServerFormController {
                 }
             }
         }).start();
-//        new Thread(() -> {
-//            try {
-//                serverClient.acceptImgConnection(PORT + 5);
-//                serverClient.setImageInputAndOutput();
-//                processImage(serverClient.getImgInputStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-//        new Thread(() -> {
-//            try {
-//                client.acceptImgConnection(PORT1 + 5);
-//                client.setImageInputAndOutput();
-//                processImage(client.getImgInputStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-//        new Thread(() -> {
-//            try {
-//                client2.acceptImgConnection(PORT2 + 1);
-//                client2.setImageInputAndOutput();
-//                processImage(client2.getImgInputStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-//        new Thread(() -> {
-//            try {
-//                client3.acceptImgConnection(PORT3 + 1);
-//                client3.setImageInputAndOutput();
-//                processImage(client3.getImgInputStream());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
+
+
         new Thread(() -> {
             try {
                 socket = new Socket("localhost", PORT);
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        Label label = new Label("Server Started...");
-                        label.setStyle("-fx-font-family: Ubuntu; -fx-font-size: 20px;");
-                        label.setLayoutY(i);
-                        context.getChildren().add(label);
-                        i += 30;
-                    }
+                Platform.runLater(() -> {
+                    Label label = new Label("Server Started...\n waiting for client...");
+                    label.setStyle("-fx-font-family: Ubuntu; -fx-font-size: 20px;");
+                    label.setLayoutY(i);
+                    context.getChildren().add(label);
+                    i += 30;
                 });
                 while (true) {
                     dataOutputStream0 = new DataOutputStream(socket.getOutputStream());
@@ -203,7 +129,7 @@ public class ServerFormController {
                                 try {
                                     sendImage = ImageIO.read(new File(message));
                                 } catch (IOException e) {
-                                    e.printStackTrace();
+                                    System.out.println(e.getMessage());
                                 }
                                 Image img = SwingFXUtils.toFXImage(sendImage, null);
                                 ImageView imageView = new ImageView(img);
@@ -229,12 +155,11 @@ public class ServerFormController {
                     });
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-            }
+                System.out.println(e.getMessage());            }
         }).start();
     }
 
-    public void btnSendOnAction(MouseEvent actionEvent) throws IOException {
+    public void btnSendOnAction() throws IOException {
         if (isImageChoose){
             dataOutputStream0.writeUTF(path.trim());
             dataOutputStream0.flush();
@@ -246,7 +171,7 @@ public class ServerFormController {
         txtMessage.clear();
     }
 
-    public void btnImageChooserOnAction(MouseEvent actionEvent) {
+    public void btnImageChooserOnAction() {
         FileChooser chooser = new FileChooser();
         Stage stage = new Stage();
         File file = chooser.showOpenDialog(stage);
@@ -260,7 +185,7 @@ public class ServerFormController {
         }
     }
 
-    public void btnExitOnAction(MouseEvent actionEvent) throws IOException {
+    public void btnExitOnAction() throws IOException {
         message = "Server Offline";
         sendTextMessage(message);
         System.exit(0);
@@ -306,44 +231,7 @@ public class ServerFormController {
         }
     }
 
-//    private void processImage(InputStream inputStream) throws IOException {
-//        System.out.println("come");
-////        BufferedImage sendImage = ImageIO.read(new File(path));
-//
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        byte[] sendSize = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-//        sendImgMessage(sendSize, byteArrayOutputStream);
-//        System.out.println("Flushed: " + System.currentTimeMillis());
-//        System.out.println("Closing: " + System.currentTimeMillis());
-////        sendTextMessage(path);
-//        sendImgMessage(sendSize,byteArrayOutputStream);
-//    }
-
-//    private void sendImgMessage(byte[] sendSize, ByteArrayOutputStream byteArrayOutputStream) throws IOException {
-//        if (serverClient.getImgSocket() != null) {
-//            serverClient.getImgOutputStream().write(sendSize);
-//            serverClient.getImgOutputStream().write(byteArrayOutputStream.toByteArray());
-//            serverClient.getImgOutputStream().flush();
-//        }
-//        if (client.getImgSocket() != null) {
-//            client.getImgOutputStream().write(sendSize);
-//            client.getImgOutputStream().write(byteArrayOutputStream.toByteArray());
-//            client.getImgOutputStream().flush();
-//            System.out.println("done");
-//        }
-//        if (client2.getImgSocket() != null) {
-//            client2.getImgOutputStream().write(sendSize);
-//            client2.getImgOutputStream().write(byteArrayOutputStream.toByteArray());
-//            client2.getImgOutputStream().flush();
-//        }
-//        if (client3.getImgSocket() != null) {
-//            client3.getImgOutputStream().write(sendSize);
-//            client3.getImgOutputStream().write(byteArrayOutputStream.toByteArray());
-//            client3.getImgOutputStream().flush();
-//        }
-//    }
-
-    public void btnEmojiOnAction(MouseEvent mouseEvent) {
+    public void btnEmojiOnAction() {
         if (isUsed) {
             emoji.getChildren().clear();
             isUsed = false;
@@ -351,15 +239,15 @@ public class ServerFormController {
         }
         isUsed = true;
         VBox dialogVbox = new VBox(20);
-        ImageView smile = new ImageView(new Image("msi/cn/chat_application_project/assets/smile.png"));
+        ImageView smile = new ImageView(new Image("chat_application_project/assets/smile.png"));
         smile.setFitWidth(30);
         smile.setFitHeight(30);
         dialogVbox.getChildren().add(smile);
-        ImageView heart = new ImageView(new Image("msi/cn/chat_application_project/assets/heart.png"));
+        ImageView heart = new ImageView(new Image("chat_application_project/assets/heart.png"));
         heart.setFitWidth(30);
         heart.setFitHeight(30);
         dialogVbox.getChildren().add(heart);
-        ImageView sadFace = new ImageView(new Image("msi/cn/chat_application_project/assets/sad-face.png"));
+        ImageView sadFace = new ImageView(new Image("chat_application_project/assets/sad-face.png"));
         sadFace.setFitWidth(30);
         sadFace.setFitHeight(30);
         dialogVbox.getChildren().add(sadFace);

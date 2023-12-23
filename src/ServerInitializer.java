@@ -4,22 +4,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class ServerInitializer extends Application {
-
-
-    void m() {
-        System.out.println("oh");
-    }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-
     @Override
     public void start(Stage primaryStage) throws IOException {
-        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("chat_application_project/view/server-form.fxml"))));
+        primaryStage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("chat_application_project/view/server-form.fxml")))));
         primaryStage.setAlwaysOnTop(true);
         primaryStage.show();
     }
