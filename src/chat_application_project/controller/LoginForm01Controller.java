@@ -1,6 +1,5 @@
 package chat_application_project.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;

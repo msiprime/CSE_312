@@ -195,15 +195,15 @@ public class Client02FormController {
         }
         isUsed = true;
         VBox dialogVbox = new VBox(20);
-        ImageView smile = new ImageView(new Image("msi/cn/chat_application_project/assets/smile.png"));
+        ImageView smile = new ImageView(new Image("chat_application_project/assets/smile.png"));
         smile.setFitWidth(30);
         smile.setFitHeight(30);
         dialogVbox.getChildren().add(smile);
-        ImageView heart = new ImageView(new Image("msi/cn/chat_application_project/assets/heart.png"));
+        ImageView heart = new ImageView(new Image("chat_application_project/assets/heart.png"));
         heart.setFitWidth(30);
         heart.setFitHeight(30);
         dialogVbox.getChildren().add(heart);
-        ImageView sadFace = new ImageView(new Image("msi/cn/chat_application_project/assets/sad-face.png"));
+        ImageView sadFace = new ImageView(new Image("chat_application_project/assets/sad-face.png"));
         sadFace.setFitWidth(30);
         sadFace.setFitHeight(30);
         dialogVbox.getChildren().add(sadFace);
