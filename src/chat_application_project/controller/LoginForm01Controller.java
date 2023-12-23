@@ -14,7 +14,7 @@ public class LoginForm01Controller {
     public AnchorPane loginContext;
     public static String name;
 
-    public void btnLoginOnAction(ActionEvent actionEvent) throws IOException {
+    public void btnLoginOnAction() throws IOException {
         name = txtName.getText();
         loginContext.getChildren().clear();
         Stage stage = (Stage) loginContext.getScene().getWindow();
