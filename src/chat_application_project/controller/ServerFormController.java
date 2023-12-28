@@ -1,5 +1,6 @@
 package chat_application_project.controller;
 
+import chat_application_project.model.Client;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Label;
@@ -7,19 +8,17 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import chat_application_project.model.Client;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
 public class ServerFormController {
     public ScrollPane msgContext;
@@ -33,8 +32,8 @@ public class ServerFormController {
     Socket socket;
     DataInputStream dataInputStream0;
     DataOutputStream dataOutputStream0;
-    ImageInputStream imgInputStream;
-    ImageOutputStream imgOutputStream;
+//    ImageInputStream imgInputStream;
+//    ImageOutputStream imgOutputStream;
     String message = "";
     int i = 0;
     public AnchorPane context = new AnchorPane();
@@ -121,37 +120,34 @@ public class ServerFormController {
                     dataInputStream0 = new DataInputStream(socket.getInputStream());
                     message = dataInputStream0.readUTF();
                     System.out.println(message);
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (message.startsWith("/")) {
-                                BufferedImage sendImage = null;
-                                try {
-                                    sendImage = ImageIO.read(new File(message));
-                                } catch (IOException e) {
-                                    System.out.println(e.getMessage());
-                                }
-                                Image img = SwingFXUtils.toFXImage(sendImage, null);
-                                ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(150);
-                                imageView.setFitWidth(150);
-                                imageView.setLayoutY(i);
-                                context.getChildren().add(imageView);
-                                i += 150;
-                            }else if (message.startsWith("Admin")) {
-                                message = message.replace("Admin", "You");
-                                Label label = new Label(message);
-                                label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #85b6ff; -fx-text-fill: #5c5c5c");
-                                label.setLayoutY(i);
-                                context.getChildren().add(label);
-                            } else {
-                                Label label = new Label(message);
-                                label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #CDB4DB; -fx-text-fill: #5c5c5c");
-                                label.setLayoutY(i);
-                                context.getChildren().add(label);
+                    Platform.runLater(() -> {
+                        if (message.startsWith("/")) {
+                            BufferedImage sendImage = null;
+                            try {
+                                sendImage = ImageIO.read(new File(message));
+                            } catch (IOException e) {
+                                System.out.println(e.getMessage());
                             }
-                            i += 30;
+                            Image img = SwingFXUtils.toFXImage(sendImage, null);
+                            ImageView imageView = new ImageView(img);
+                            imageView.setFitHeight(150);
+                            imageView.setFitWidth(150);
+                            imageView.setLayoutY(i);
+                            context.getChildren().add(imageView);
+                            i += 150;
+                        }else if (message.startsWith("Admin")) {
+                            message = message.replace("Admin", "You");
+                            Label label = new Label(message);
+                            label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #85b6ff; -fx-text-fill: #5c5c5c");
+                            label.setLayoutY(i);
+                            context.getChildren().add(label);
+                        } else {
+                            Label label = new Label(message);
+                            label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #CDB4DB; -fx-text-fill: #5c5c5c");
+                            label.setLayoutY(i);
+                            context.getChildren().add(label);
                         }
+                        i += 30;
                     });
                 }
             } catch (IOException e) {
@@ -177,7 +173,6 @@ public class ServerFormController {
         File file = chooser.showOpenDialog(stage);
 
         if (file != null) {
-//            dataOutputStream.writeUTF(file.getPath());
             path = file.getPath();
             System.out.println("selected");
             System.out.println(file.getPath());
@@ -251,15 +246,9 @@ public class ServerFormController {
         sadFace.setFitWidth(30);
         sadFace.setFitHeight(30);
         dialogVbox.getChildren().add(sadFace);
-        smile.setOnMouseClicked(event -> {
-            txtMessage.setText(txtMessage.getText() + "☺");
-        });
-        heart.setOnMouseClicked(event -> {
-            txtMessage.setText(txtMessage.getText() + "♥");
-        });
-        sadFace.setOnMouseClicked(event -> {
-            txtMessage.setText(txtMessage.getText() + "☹");
-        });
+        smile.setOnMouseClicked(event -> txtMessage.setText(txtMessage.getText() + "☺"));
+        heart.setOnMouseClicked(event -> txtMessage.setText(txtMessage.getText() + "♥"));
+        sadFace.setOnMouseClicked(event -> txtMessage.setText(txtMessage.getText() + "☹"));
         emoji.getChildren().add(dialogVbox);
     }
 }

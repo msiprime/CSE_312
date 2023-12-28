@@ -60,41 +60,38 @@ public class Client03FormController {
                     message = dataInputStream.readUTF();
                     System.out.println(message);
 
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (message.startsWith("/")) {
-                                BufferedImage sendImage = null;
-                                try {
-                                    sendImage = ImageIO.read(new File(message));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                Image img = SwingFXUtils.toFXImage(sendImage, null);
-                                ImageView imageView = new ImageView(img);
-                                imageView.setFitHeight(150);
-                                imageView.setFitWidth(150);
-                                imageView.setLayoutY(i);
-                                context.getChildren().add(imageView);
-                                i += 150;
-                            } else if (message.startsWith(chat_application_project.controller.LoginForm03Controller.name)) {
-                                message = message.replace(LoginForm03Controller.name, "You");
-                                Label label = new Label(message);
-                                label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #85b6ff; -fx-text-fill: #5c5c5c");
-                                label.setLayoutY(i);
-                                context.getChildren().add(label);
-                            } else {
-                                Label label = new Label(message);
-                                label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #CDB4DB; -fx-text-fill: #5c5c5c");
-                                label.setLayoutY(i);
-                                context.getChildren().add(label);
+                    Platform.runLater(() -> {
+                        if (message.startsWith("/")) {
+                            BufferedImage sendImage = null;
+                            try {
+                                sendImage = ImageIO.read(new File(message));
+                            } catch (IOException e) {
+                                System.out.println(e.getMessage());
                             }
-                            i += 30;
+                            Image img = SwingFXUtils.toFXImage(sendImage, null);
+                            ImageView imageView = new ImageView(img);
+                            imageView.setFitHeight(150);
+                            imageView.setFitWidth(150);
+                            imageView.setLayoutY(i);
+                            context.getChildren().add(imageView);
+                            i += 150;
+                        } else if (message.startsWith(LoginForm03Controller.name)) {
+                            message = message.replace(LoginForm03Controller.name, "You");
+                            Label label = new Label(message);
+                            label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #85b6ff; -fx-text-fill: #5c5c5c");
+                            label.setLayoutY(i);
+                            context.getChildren().add(label);
+                        } else {
+                            Label label = new Label(message);
+                            label.setStyle(" -fx-font-family: Ubuntu; -fx-font-size: 20px; -fx-background-color: #CDB4DB; -fx-text-fill: #5c5c5c");
+                            label.setLayoutY(i);
+                            context.getChildren().add(label);
                         }
+                        i += 30;
                     });
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }).start();
 

@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -64,7 +63,7 @@ public class Client01FormController {
                             try {
                                 sendImage = ImageIO.read(new File(message));
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                System.out.println(e.getMessage());
                             }
                             Image img = SwingFXUtils.toFXImage(sendImage, null);
                             ImageView imageView = new ImageView(img);
@@ -89,7 +88,7 @@ public class Client01FormController {
                     });
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }).start();
 
@@ -100,61 +99,9 @@ public class Client01FormController {
                 System.out.println(e.getMessage());
             }
         });
-
-//        new Thread(() -> {
-//            try {
-//                imgSocket = new Socket("localhost", PORT + 5);
-//                while (true) {
-//                    imgOutputStream = imgSocket.getOutputStream();
-//                    imgInputStream = imgSocket.getInputStream();
-//
-//                    byte[] sizeAr = new byte[4];
-//                    imgInputStream.read(sizeAr);
-//                    int size = ByteBuffer.wrap(sizeAr).asIntBuffer().get();
-//
-//                    byte[] imageAr = new byte[size];
-//                    imgInputStream.read(imageAr);
-//
-//                    BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageAr));
-//
-//                    System.out.println("Received " + image.getHeight() + "x" + image.getWidth() + ": " + System.currentTimeMillis());
-//                    ImageIO.write(image, "jpg", new File("/media/sandu/0559F5C021740317/GDSE/Project_Zone/IdeaProjects/INP_Course_Work/src/lk/play_tech/chat_application/bo/test1.jpg"));
-//                    BufferedImage sendImage = ImageIO.read(new File("/media/sandu/0559F5C021740317/GDSE/Project_Zone/IdeaProjects/INP_Course_Work/src/lk/play_tech/chat_application/bo/test1.jpg"));
-//
-//                    Platform.runLater(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Image img = SwingFXUtils.toFXImage(sendImage, null);
-//                            ImageView imageView = new ImageView(img);
-//                            imageView.setFitHeight(150);
-//                            imageView.setFitWidth(150);
-//                            imageView.setLayoutY(100);
-//                            context.getChildren().add(imageView);
-//                            i += 120;
-//                        }
-//                    });
-//                }
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
     }
 
     public void btnSendOnAction(MouseEvent actionEvent) throws IOException {
-////        if (isImageChoose){
-//            BufferedImage image = ImageIO.read(new File(path));
-//
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            ImageIO.write(image, "png", byteArrayOutputStream);
-//
-//            byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
-//            dataOutputStream.write(size);
-//            dataOutputStream.write(byteArrayOutputStream.toByteArray());
-//            dataOutputStream.flush();
-////        }else {
-////
-////        }
         sendMessage();
     }
 
@@ -170,14 +117,13 @@ public class Client01FormController {
         txtMessage.clear();
     }
 
-    public void btnImageChooserOnAction(MouseEvent actionEvent) throws IOException {
+    public void btnImageChooserOnAction(MouseEvent actionEvent) {
         // get the file selected
         FileChooser chooser = new FileChooser();
         Stage stage = new Stage();
         file = chooser.showOpenDialog(stage);
 
         if (file != null) {
-//            dataOutputStream.writeUTF(file.getPath());
             path = file.getPath();
             System.out.println("selected");
             System.out.println(file.getPath());
