@@ -64,7 +64,7 @@ public class Client01FormController {
                             try {
                                 sendImage = ImageIO.read(new File(message));
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                System.out.println(e.getMessage());
                             }
                             Image img = SwingFXUtils.toFXImage(sendImage, null);
                             ImageView imageView = new ImageView(img);
@@ -89,7 +89,7 @@ public class Client01FormController {
                     });
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }).start();
 

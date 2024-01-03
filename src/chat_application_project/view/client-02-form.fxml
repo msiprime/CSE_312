@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="730.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom, #85b6ff, #a1b4f7, #b5b3ee, #c3b3e4, #cdb4db);;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_application_project.controller.Client02FormController">
+<AnchorPane prefHeight="730.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom, #b6a0ff, #aeadf8, #a08dff, #7981f9, #cdb4db);;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat_application_project.controller.Client02FormController">
     <children>
         <ScrollPane fx:id="msgContext" layoutX="28.0" layoutY="161.0" opacity="0.7" prefHeight="430.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 10;" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="124.0" />
         <Label fx:id="lblClient" layoutX="136.0" layoutY="50.0" text="Client 01" textFill="#5c5c5c">
@@ -37,6 +37,9 @@
                 </FontAwesomeIconView>
             </children></AnchorPane>
         <FontAwesomeIconView fill="#efefef" glyphName="POWER_OFF" layoutX="35.0" layoutY="61.0" onMouseClicked="#btnExitOnAction" size="40" />
+        <FontAwesomeIconView fill="#69ff08" glyphName="CIRCLE" layoutX="300.0" layoutY="75.0" size="16" />
+        <Label layoutX="320.0" layoutY="62.0" text="(active now)" textFill="#000000" style="-fx-font-size: 10px;">
+        </Label>
         <AnchorPane fx:id="emoji" layoutY="385.0" prefHeight="200.0" prefWidth="325.0" />
     </children>
 </AnchorPane>

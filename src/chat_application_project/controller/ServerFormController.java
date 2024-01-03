@@ -193,7 +193,7 @@ public class ServerFormController {
 
     public void processTextMessage(Client client, DataInputStream dataInputStream) throws IOException {
         if (dataOutputStream0 != null) {
-            dataOutputStream0.writeUTF("👋\t\t\t" + client.getName() + "  Joined\t\t\t👋".trim());
+            dataOutputStream0.writeUTF("👋\t\t\t" + client.getName() + "  Is Active\t\t\t👋".trim());
             dataOutputStream0.flush();
         }
 
@@ -203,7 +203,7 @@ public class ServerFormController {
             if (message.equals("exit")) {
                 client.setAccept(null);
                 client.setImgSocket(null);
-                dataOutputStream0.writeUTF("👋\t\t\t" + client.getName() + " left\t\t\t👋".trim());
+                dataOutputStream0.writeUTF("👋\t\t\t" + client.getName() + " Is Offline\t\t\t👋".trim());
                 dataOutputStream0.flush();
                 client.setServerSocket(null);
                 return;
