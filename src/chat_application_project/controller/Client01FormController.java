@@ -1,5 +1,7 @@
 package chat_application_project.controller;
 
+import chat_application_project.model.CRC;
+import chat_application_project.model.StufferDeStufferCrcChecker;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Label;
@@ -17,6 +19,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class Client01FormController {
     public ScrollPane msgContext;
@@ -164,11 +167,17 @@ public class Client01FormController {
             dataOutputStream.flush();
             isImageChoose = false;
         } else {
-            dataOutputStream.writeUTF(lblClient.getText() + " : " + txtMessage.getText().trim());
+
+            StufferDeStufferCrcChecker dc = new StufferDeStufferCrcChecker();
+            CRC crc = new CRC();
+            String msg = dc.binaryToMessage(dc.stuffing(dc.messageToBinary(txtMessage.getText().trim())));
+            crc.initializer(dc.messageToBinary(msg));
+            dataOutputStream.writeUTF(lblClient.getText() + " : " + msg.trim());
             dataOutputStream.flush();
         }
         txtMessage.clear();
     }
+
 
     public void btnImageChooserOnAction(MouseEvent actionEvent) throws IOException {
         // get the file selected

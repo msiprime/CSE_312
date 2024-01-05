@@ -1,5 +1,7 @@
 package chat_application_project.controller;
 
+import chat_application_project.model.CRC;
+import chat_application_project.model.StufferDeStufferCrcChecker;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -107,7 +109,14 @@ public class Client03FormController {
             dataOutputStream.flush();
             isImageChoose = false;
         } else {
-            dataOutputStream.writeUTF(lblClient.getText() + " : " + txtMessage.getText().trim());
+//            dataOutputStream.writeUTF(lblClient.getText() + " : " + txtMessage.getText().trim());
+//            dataOutputStream.flush();
+
+            StufferDeStufferCrcChecker dc = new StufferDeStufferCrcChecker();
+            CRC crc = new CRC();
+            String msg = dc.binaryToMessage(dc.stuffing(dc.messageToBinary(txtMessage.getText().trim())));
+            crc.initializer(dc.messageToBinary(msg));
+            dataOutputStream.writeUTF(lblClient.getText() + " : " + msg.trim());
             dataOutputStream.flush();
         }
         txtMessage.clear();
