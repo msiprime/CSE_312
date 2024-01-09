@@ -1,5 +1,4 @@
 package chat_application_project.model;
-
 import java.nio.charset.StandardCharsets;
 
 public class StufferDeStufferCrcChecker {
