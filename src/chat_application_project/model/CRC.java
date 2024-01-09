@@ -51,7 +51,7 @@ public class CRC {
         String codeword = data + remainder;
         //System.out.println("Remainder : " + remainder);
         System.out.println(
-                "Data :" + codeword
+                "Code Word :" + codeword
                         + "\n");
     }
 
@@ -77,9 +77,12 @@ public class CRC {
         }
     }
 
-    // Driver code
     public void initializer(String data) {
+
+        System.out.println("CRC checking... ");
         String key = "1010";
+        System.out.println("Key: "+key);
+        System.out.println("Data: " +data);
         encoded(data, key);
 
         System.out.println("Receiver: ");

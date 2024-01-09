@@ -31,7 +31,7 @@ public class StufferDeStufferCrcChecker {
     public String stuffing(String input) {
 
         StringBuilder sb = new StringBuilder();
-
+        System.out.println("Start Stuffing...");
         int count = 0;
 
         for (int i = 0; i < input.length(); i++) {
@@ -47,8 +47,9 @@ public class StufferDeStufferCrcChecker {
                 count = 0;
             }
         }
-        System.out.println(sb);
-        System.out.println("Start De-stuffing...");
+        System.out.print("Stuffed:");
+        System.out.print(sb);
+        System.out.println("\nStart De-stuffing...");
         count = 0;
         for (int i = 0; i < sb.length(); i++) {
             if (sb.charAt(i) == '1') {
